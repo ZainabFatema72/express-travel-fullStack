@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Facebook, Instagram, Linkedin, MapPin, ChevronRight, 
-  Youtube, FileText, Download, Phone, Mail 
+  Youtube, FileText, Download, Phone, Mail, MessageSquare 
 } from 'lucide-react';
 import rwtlogo from '../assets/rwtlogo.png'; 
 
@@ -26,7 +26,6 @@ const Footer = () => {
 
   return (
     <footer className="bg-[#0a1128] text-white pt-10 pb-3 relative overflow-hidden font-sans border-t border-white/10">
-      {/* Background World Map Pattern */}
       <div 
         className="absolute inset-0 opacity-[0.04] pointer-events-none mix-blend-screen"
         style={{
@@ -49,18 +48,15 @@ const Footer = () => {
                  className="h-full object-contain brightness-0 invert" 
                />
             </div>
-            {/* Font size uniform with other headings/text */}
             <p className="text-white text-sm font-black uppercase tracking-widest leading-relaxed">
               Express Travel Corporate <br /> Services Private Limited
             </p>
             
             <div className="space-y-4 pt-2">
               <div className="flex items-start gap-3 text-white">
-                <MapPin className="w-5 h-5 text-[#1C4D8D] shrink-0 mt-1" />
-                {/* Fixed Address Font Size to match UI */}
+                <MapPin className="w-5 h-5 text-[#60A5FA] shrink-0 mt-1" />
                 <p className="text-sm leading-relaxed font-bold">
-                  3rd No.20, Duraisamy Street, <br />
-                  Nungambakkam, Chennai-600034
+                  Regd. Office <br></br>Express Building <br></br>No.20, Duraisamy Street, <br></br>Nungambakkam, Chennai-600034
                 </p>
               </div>
             </div>
@@ -68,14 +64,14 @@ const Footer = () => {
 
           {/* 2. INFORMATION */}
           <div className="space-y-6">
-            <h4 className="text-[#1C4D8D] font-black text-sm uppercase tracking-widest border-l-4 border-[#1C4D8D] pl-3">
+            <h4 className="text-[#60A5FA] font-black text-lg md:text-xl uppercase tracking-widest border-l-4 border-[#60A5FA] pl-3 drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]">
               Information
             </h4>
             <ul className="grid grid-cols-1 gap-3">
               {infoLinks.map((link) => (
                 <li key={link.name}>
-                  <Link to={link.path} className="text-white hover:text-[#1C4D8D] text-sm font-bold uppercase tracking-widest transition-all flex items-center group">
-                    <ChevronRight size={16} className="text-[#1C4D8D] mr-2 group-hover:translate-x-1 transition-transform" />
+                  <Link to={link.path} className="text-white hover:text-[#60A5FA] text-sm font-bold uppercase tracking-widest transition-all flex items-center group">
+                    <ChevronRight size={16} className="text-[#60A5FA] mr-2 group-hover:translate-x-1 transition-transform" />
                     {link.name}
                   </Link>
                 </li>
@@ -83,15 +79,15 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* 3. CONTACT & TARIFF (Uniform Font Sizes) */}
+          {/* 3. CONTACT & TARIFF */}
           <div className="space-y-6">
-            <h4 className="text-[#1C4D8D] font-black text-sm uppercase tracking-widest border-l-4 border-[#1C4D8D] pl-3">
+            <h4 className="text-[#60A5FA] font-black text-lg md:text-xl uppercase tracking-widest border-l-4 border-[#60A5FA] pl-3 drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]">
               Tariff & Contact
             </h4>
             <div className="space-y-4">
               <button 
                 onClick={handleDownloadTariff}
-                className="bg-[#1C4D8D] text-white px-5 py-3 rounded-xl flex items-center gap-3 animate-pulse border border-blue-400/30 hover:scale-105 transition-transform"
+                className="bg-[#1C4D8D] text-white px-5 py-3 rounded-none flex items-center gap-3 animate-pulse border border-blue-400/30 hover:scale-105 transition-transform"
               >
                 <FileText size={20} />
                 <div className="text-left">
@@ -104,34 +100,43 @@ const Footer = () => {
               <div className="pt-2 space-y-4">
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-2">
-                    <Phone size={16} className="text-[#1C4D8D]" />
-                    <p className="text-white text-sm font-black tracking-tight">+91-9791111275</p>
+                    <Phone size={16} className="text-[#60A5FA]" />
+                    <p className="text-white text-sm font-black tracking-tight">+91 44 2822 4413 ,<br></br>+91 44 2827 2279 ,<br></br>+91 97 9111 1275</p>
                   </div>
-
                 </div>
                 
                 <div className="flex items-center gap-2">
-                  <Mail size={16} className="text-[#1C4D8D]" />
-                  <p className="text-white text-sm font-bold lowercase tracking-wide">info@expresstravelcorp.com</p>
+                  <Mail size={16} className="text-[#60A5FA]" />
+                  <p className="text-white text-sm font-bold lowercase tracking-wide">enquiry@expresstravelcorp.com </p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* 4. CONNECT */}
+          {/* 4. CONNECT - Symbols made smaller and set in one line */}
           <div className="space-y-6">
-            <h4 className="text-[#1C4D8D] font-black text-sm uppercase tracking-widest border-l-4 border-[#1C4D8D] pl-3">
+            <h4 className="text-[#60A5FA] font-black text-lg md:text-xl uppercase tracking-widest border-l-4 border-[#60A5FA] pl-3 drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]">
               Connect
             </h4>
-            <div className="flex gap-3">
-              {[Facebook, Instagram, Linkedin, Youtube].map((Icon, i) => (
-                <a key={i} href="#!" className="p-3 bg-white/5 border border-white/10 rounded-xl text-white hover:bg-[#1C4D8D] transition-all">
-                  <Icon size={20} />
-                </a>
-              ))}
+            <div className="flex flex-row items-center gap-2">
+              <a href="https://www.facebook.com/touroperatorsinchennai" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
+                <Facebook size={16} />
+              </a>
+              <a href="https://workspaceupdates.googleblog.com/2023/04/new-community-features-for-google-chat-and-an-update-currents%20.html" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
+                <MessageSquare size={16} />
+              </a>
+              <a href="#!" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
+                <Instagram size={16} />
+              </a>
+              <a href="#!" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
+                <Linkedin size={16} />
+              </a>
+              <a href="#!" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
+                <Youtube size={16} />
+              </a>
             </div>
-            <div className="flex items-center gap-2 text-[#1C4D8D] text-xs font-black uppercase italic">
-                <div className="w-2 h-2 bg-[#1C4D8D] rounded-full animate-ping" />
+            <div className="flex items-center gap-2 text-[#60A5FA] text-xs font-black uppercase italic">
+                <div className="w-2 h-2 bg-[#60A5FA] rounded-full animate-ping" />
                 Since 1999
             </div>
           </div>
@@ -158,7 +163,7 @@ const Footer = () => {
         }
         @keyframes pulse {
           0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.6; transform: scale(1.02); box-shadow: 0 0 15px rgba(28, 77, 141, 0.5); }
+          50% { opacity: 0.6; transform: scale(1.02); box-shadow: 0 0 15px rgba(96, 165, 250, 0.4); }
         }
       `}</style>
     </footer>

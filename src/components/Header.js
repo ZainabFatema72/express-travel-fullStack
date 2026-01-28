@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react'; // Mobile menu icons
+import { Menu, X } from 'lucide-react'; 
 import logo from '../assets/LOGO.jpg'; 
 
 const Header = () => {
   const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false); // Mobile menu state
+  const [isOpen, setIsOpen] = useState(false); 
 
   const navLinks = [
     { name: 'HOME', path: '/' },
@@ -48,7 +48,7 @@ const Header = () => {
           {/* Contact Button for Desktop */}
           <Link 
             to="/contact" 
-            className="bg-[#1C4D8D] text-white ml-4 px-8 py-3 rounded-2xl font-black text-[12px] tracking-widest hover:bg-black transition-all shadow-md uppercase"
+            className="bg-[#1C4D8D] text-white ml-4 px-8 py-3 rounded-none font-black text-[12px] tracking-widest hover:bg-black transition-all shadow-md uppercase"
           >
             Contact Us
           </Link>

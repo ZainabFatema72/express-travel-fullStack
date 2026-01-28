@@ -17,15 +17,15 @@ const ContactUs = () => {
             <div className="space-y-10">
               <div className="flex items-center gap-5">
                 <div className="bg-blue-600/20 p-4 rounded-2xl border border-blue-500/30 text-blue-400"><Phone size={24} /></div>
-                <div><p className="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Call for booking</p><p className="text-xl font-bold">+91 44 4203 7171</p></div>
+                <div><p className="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Call for booking</p><p className="text-xl font-bold">+91 44 2822 4413 ,<br></br>+91 44 2827 2279 ,<br></br>+91 97 9111 1275</p></div>
               </div>
               <div className="flex items-center gap-5">
                 <div className="bg-blue-600/20 p-4 rounded-2xl border border-blue-500/30 text-blue-400"><Mail size={24} /></div>
-                <div><p className="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Email Us</p><p className="text-xl font-bold">info@expresstravelcorp.com</p></div>
+                <div><p className="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Email Us</p><p className="text-xl font-bold">enquiry@expresstravelcorp.com</p></div>
               </div>
               <div className="flex items-center gap-5">
                 <div className="bg-blue-600/20 p-4 rounded-2xl border border-blue-500/30 text-blue-400"><Clock size={24} /></div>
-                <div><p className="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Response Time</p><p className="text-xl font-bold text-green-400 tracking-tight">Under 15 Minutes</p></div>
+                <div><p className="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Response Time</p><p className="text-xl font-bold text-green-400 tracking-tight">Approximate 15 Minutes</p></div>
               </div>
             </div>
           </div>

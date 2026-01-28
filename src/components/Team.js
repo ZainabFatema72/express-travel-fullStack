@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import { ChevronRight, Quote } from 'lucide-react';
+import React from 'react';
+import { Quote } from 'lucide-react';
 import mohanImg from '../assets/mohan.jpg';
 import alagarImg from '../assets/alagarswamy.jpg';
 
 const Team = () => {
-  const [activeTab, setActiveTab] = useState(0);
-
   const teamMembers = [
     {
       name: "Mohan Ramadass",
@@ -26,98 +24,63 @@ const Team = () => {
   ];
 
   return (
-    <section id="team" className="py-24 bg-[#fafafa] overflow-hidden">
+    <section id="team" className="py-24 bg-[#fafafa]">
       <div className="container mx-auto px-4 md:px-12">
         
         {/* Section Header */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-16">
           <h4 className="text-blue-600 font-bold uppercase tracking-[0.3em] text-sm mb-4">Leadership</h4>
-          <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-6 tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">
             Our <span className="text-blue-600">Experts</span>
           </h2>
           <div className="w-20 h-1.5 bg-blue-600 mx-auto rounded-full"></div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-12 items-start">
-          
-          {/* LEFT SIDE: Interactive Navigation */}
-          <div className="w-full lg:w-1/3 flex flex-col gap-4">
-            {teamMembers.map((member, index) => (
-              <button
-                key={index}
-                onClick={() => setActiveTab(index)}
-                className={`group relative flex items-center justify-between p-6 rounded-2xl transition-all duration-500 ${
-                  activeTab === index 
-                  ? 'bg-white shadow-[0_20px_50px_rgba(37,99,235,0.1)] scale-[1.02] border-l-8 border-blue-600' 
-                  : 'bg-transparent border border-gray-200 hover:border-blue-300'
-                }`}
-              >
-                <div className="flex flex-col items-start text-left">
-                  <span className={`text-xs uppercase tracking-widest font-bold mb-1 ${activeTab === index ? 'text-blue-600' : 'text-gray-400'}`}>
-                    {member.role}
-                  </span>
-                  <span className={`text-xl font-black ${activeTab === index ? 'text-slate-900' : 'text-gray-500'}`}>
-                    {member.name}
-                  </span>
-                </div>
-                <div className={`p-2 rounded-full transition-all ${activeTab === index ? 'bg-blue-600 text-white rotate-90' : 'bg-gray-100 text-gray-400'}`}>
-                  <ChevronRight className="w-5 h-5" />
-                </div>
-              </button>
-            ))}
-          </div>
-
-          {/* RIGHT SIDE: Profile Showcase */}
-          <div className="w-full lg:w-2/3">
-            <div className="bg-white rounded-[2.5rem] p-8 md:p-16 shadow-[0_40px_100px_rgba(0,0,0,0.05)] border border-gray-50 relative overflow-hidden">
-              
-              <div className="absolute top-0 right-0 p-12 opacity-[0.03] pointer-events-none">
-                <Quote className="w-64 h-64 text-slate-900" />
-              </div>
-
-              <div className="flex flex-col xl:flex-row gap-12 relative z-10">
-                
-                {/* Image Section */}
-                <div className="w-full xl:w-2/5">
-                  <div className="relative group">
-                    <div className="absolute inset-0 bg-blue-600 rounded-3xl rotate-3 group-hover:rotate-0 transition-transform duration-500"></div>
+        {/* Side-by-Side Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {teamMembers.map((member, index) => (
+            <div 
+              key={index} 
+              className="bg-white rounded-[2rem] p-8 shadow-lg border border-gray-100 flex flex-col h-full hover:shadow-2xl transition-shadow duration-300"
+            >
+              <div className="flex flex-col md:flex-row gap-8 items-start mb-6">
+                {/* Image Container */}
+                <div className="w-full md:w-2/5 shrink-0">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-blue-600 rounded-2xl rotate-2"></div>
                     <img 
-                      src={teamMembers[activeTab].image} 
-                      alt={teamMembers[activeTab].name}
-                      className="relative z-10 w-full h-[450px] object-cover rounded-3xl shadow-2xl transition-all duration-700 grayscale hover:grayscale-0"
+                      src={member.image} 
+                      alt={member.name}
+                      className="relative z-10 w-full h-64 object-cover rounded-2xl shadow-md grayscale hover:grayscale-0 transition-all duration-500"
                     />
-                    <div className="absolute -bottom-6 -right-6 z-20 bg-white p-6 rounded-2xl shadow-xl hidden md:block border border-gray-100">
-                      <p className="text-blue-600 font-black text-3xl">{teamMembers[activeTab].experience}</p>
-                      <p className="text-gray-500 text-xs uppercase font-bold tracking-tighter">Experience</p>
+                    <div className="absolute -bottom-3 -right-3 z-20 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg">
+                      <p className="text-xs font-bold uppercase tracking-tighter">Exp: {member.experience}</p>
                     </div>
                   </div>
                 </div>
 
-                {/* Content Section */}
-                <div className="w-full xl:w-3/5 flex flex-col justify-center">
-                  <div className="mb-8">
-                    <h3 className="text-4xl font-black text-slate-900 mb-2">{teamMembers[activeTab].name}</h3>
-                    <p className="text-blue-600 font-bold tracking-[0.2em] uppercase text-sm">{teamMembers[activeTab].role}</p>
-                  </div>
-
-                  <div className="relative mb-8">
-                    <Quote className="absolute -top-4 -left-6 w-10 h-10 text-blue-100 -z-10" />
-                    <p className="text-gray-600 text-lg leading-relaxed italic">
-                      {teamMembers[activeTab].bio}
-                    </p>
-                  </div>
-
-                  <div className="bg-slate-50 p-6 rounded-2xl border-l-4 border-blue-600">
-                    <p className="text-slate-800 font-medium text-md leading-relaxed">
-                      {teamMembers[activeTab].vision}
+                {/* Name and Role */}
+                <div className="w-full md:w-3/5">
+                  <h3 className="text-2xl font-black text-slate-900 mb-1">{member.name}</h3>
+                  <p className="text-blue-600 font-bold uppercase text-xs tracking-wider mb-4">{member.role}</p>
+                  
+                  <div className="relative">
+                    <Quote className="absolute -top-2 -left-4 w-6 h-6 text-blue-100 -z-0" />
+                    <p className="text-gray-600 text-sm leading-relaxed italic relative z-10">
+                      {member.bio}
                     </p>
                   </div>
                 </div>
+              </div>
 
+              {/* Vision Box - Pushed to bottom */}
+              <div className="mt-auto bg-slate-50 p-5 rounded-xl border-l-4 border-blue-600">
+                <p className="text-slate-700 text-sm font-medium leading-relaxed">
+                  {member.vision}
+                </p>
               </div>
             </div>
-          </div>
-
+          ))}
         </div>
       </div>
     </section>

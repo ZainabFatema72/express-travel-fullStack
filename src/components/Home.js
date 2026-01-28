@@ -48,7 +48,7 @@ const Home = () => {
       <section className="py-8 px-6 bg-slate-50 overflow-hidden text-left">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-8">
           <div className="lg:w-1/2 relative group">
-            <div className="rounded-2xl overflow-hidden shadow-xl relative z-10">
+            <div className="rounded-none overflow-hidden shadow-xl relative z-10">
               <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&q=80&w=1200" alt="ETC Service" className="w-full h-[350px] object-cover" />
             </div>
           </div>
@@ -57,7 +57,7 @@ const Home = () => {
               Your Trusted Mobility <br/><span className="text-[#1C4D8D]">Partner Since 1999</span>
             </h2>
             <p className="text-gray-600 text-sm leading-relaxed">Express Travel Corporate Services (ETC) was established to provide MNCs and large organizations with a superior travel experience through dynamic leadership and a belief that clients are our prime assets.</p>
-            <Link to="/about" className="inline-flex items-center gap-2 bg-[#1C4D8D] text-white px-8 py-3 rounded-full font-bold text-[10px] tracking-widest uppercase shadow-lg hover:bg-slate-900 transition-all">
+            <Link to="/about" className="inline-flex items-center gap-2 bg-[#1C4D8D] text-white px-8 py-3 rounded-none font-bold text-[10px] tracking-widest uppercase shadow-lg hover:bg-slate-900 transition-all">
               Discover Our Story <ChevronRight size={14}/>
             </Link>
           </div>
@@ -72,11 +72,13 @@ const Home = () => {
         </div>
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {services.map((service, index) => (
-                <Link to="/services" key={index} className="group relative h-[250px] rounded-xl overflow-hidden shadow-md block">
+                <Link to="/services" key={index} className="group relative h-[250px] rounded-none overflow-hidden shadow-md block">
                     <img src={service.image} alt={service.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1C4D8D]/90 via-[#1C4D8D]/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1C4D8D]/40 via-[#1C4D8D]/20 to-transparent" />
                     <div className="absolute inset-0 p-4 flex flex-col justify-end text-white text-left">
-                        <h3 className="text-[11px] font-black uppercase tracking-tight mb-2 leading-tight">{service.title}</h3>
+
+                        <h2 className="text-[11px] font-black uppercase tracking-tight mb-2 leading-tight">{service.title}</h2>
+
                         <div className="flex items-center gap-1 text-[9px] font-bold uppercase opacity-0 group-hover:opacity-100 transition-opacity">
                           View Details <ArrowRight size={12} className="text-blue-300" />
                         </div>
@@ -118,7 +120,10 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 5. CLIENT FEEDBACK - Compact py-8 */}
+     
+
+
+     {/* 5. CLIENT FEEDBACK - Compact py-8 */}
       <section className="py-8 px-6 overflow-hidden relative bg-white">
         <div className="absolute inset-0 bg-cover bg-center z-0 opacity-5" style={{ backgroundImage: `url(${clientBgImg})` }}></div>
         <div className="max-w-3xl mx-auto text-center relative z-10">
@@ -132,7 +137,7 @@ const Home = () => {
             </div>
             <button onClick={() => setActiveFeedback(activeFeedback === 3 ? 0 : activeFeedback + 1)} className="p-1 text-[#1C4D8D] border border-[#1C4D8D]/20 rounded-full hover:bg-[#1C4D8D] hover:text-white transition-all"><ChevronRight size={18}/></button>
           </div>
-          <div className="bg-slate-50 p-6 md:p-8 rounded-[2rem] shadow-lg text-center border border-slate-100 relative">
+          <div className="bg-slate-50 p-6 md:p-8 rounded- xl shadow-lg text-center border border-slate-100 relative">
             <Quote className="text-[#1C4D8D] mx-auto mb-4 opacity-40" size={32} />
             <p className="text-slate-600 text-sm md:text-base leading-relaxed italic font-medium mb-4">"{testimonials[activeFeedback].text}"</p>
             <div className="w-8 h-0.5 bg-blue-500 mx-auto mb-3"></div>

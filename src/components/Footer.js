@@ -6,6 +6,9 @@ import {
 } from 'lucide-react';
 import rwtlogo from '../assets/rwtlogo.png'; 
 
+// 1. Pehle PDF ko import karein
+import panPDF from '../assets/pan.pdf'; 
+
 const Footer = () => {
   const infoLinks = [
     { name: 'About Us', path: '/about' },
@@ -15,10 +18,11 @@ const Footer = () => {
     { name: 'Contact Us', path: '/contact' }
   ];
 
+  // 2. Updated Download Logic
   const handleDownloadTariff = () => {
     const link = document.createElement("a");
-    link.href = "/tariff-details.pdf"; 
-    link.download = "ETC_Tariff_Details.pdf";
+    link.href = panPDF; // Yahan imported file ka use hoga
+    link.download = "ETC_Tariff_Details.pdf"; 
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -40,7 +44,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           
           {/* 1. BRAND & IDENTITY */}
-          <div className="space-y-6">
+          <div className="space-y-6 text-left">
             <div className="h-12 w-48 mb-4">
                <img 
                  src="https://www.etconline.in/images/logo.png" 
@@ -63,7 +67,7 @@ const Footer = () => {
           </div>
 
           {/* 2. INFORMATION */}
-          <div className="space-y-6">
+          <div className="space-y-6 text-left">
             <h4 className="text-[#60A5FA] font-black text-lg md:text-xl uppercase tracking-widest border-l-4 border-[#60A5FA] pl-3 drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]">
               Information
             </h4>
@@ -80,7 +84,7 @@ const Footer = () => {
           </div>
 
           {/* 3. CONTACT & TARIFF */}
-          <div className="space-y-6">
+          <div className="space-y-6 text-left">
             <h4 className="text-[#60A5FA] font-black text-lg md:text-xl uppercase tracking-widest border-l-4 border-[#60A5FA] pl-3 drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]">
               Tariff & Contact
             </h4>
@@ -113,22 +117,22 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* 4. CONNECT - Symbols made smaller and set in one line */}
-          <div className="space-y-6">
+          {/* 4. CONNECT */}
+          <div className="space-y-6 text-left">
             <h4 className="text-[#60A5FA] font-black text-lg md:text-xl uppercase tracking-widest border-l-4 border-[#60A5FA] pl-3 drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]">
               Connect
             </h4>
             <div className="flex flex-row items-center gap-2">
-              <a href="https://www.facebook.com/touroperatorsinchennai" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
+              <a href="https://www.facebook.com/share/r/1HyKdVtRCN/" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
                 <Facebook size={16} />
               </a>
-              <a href="https://workspaceupdates.googleblog.com/2023/04/new-community-features-for-google-chat-and-an-update-currents%20.html" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
+              <a href="https://www.facebook.com/share/1F642eNLSg/" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
                 <MessageSquare size={16} />
               </a>
-              <a href="#!" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
+              <a href="https://www.instagram.com/p/DP1NcqLAQVE/" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
                 <Instagram size={16} />
               </a>
-              <a href="#!" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
+              <a href="https://www.instagram.com/p/DP1O685CYku/" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
                 <Linkedin size={16} />
               </a>
               <a href="#!" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
@@ -156,16 +160,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        .animate-pulse {
-          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.6; transform: scale(1.02); box-shadow: 0 0 15px rgba(96, 165, 250, 0.4); }
-        }
-      `}</style>
     </footer>
   );
 };

@@ -72,7 +72,7 @@ import dinexLogo from '../assets/clients/New/DINEX.jpeg';
 import gigamonLogo from '../assets/clients/New/Gigamon.png';
 import kennametalLogo from '../assets/clients/New/Kennametal.png';
 import kumaranLogo from '../assets/clients/New/KUMARAN.jpeg';
-import agpLogo from '../assets/clients/New/logo_1.png';
+
 import usConsulateLogo from '../assets/clients/New/US CONSULATE.jpg';
 
 // Background Image Import
@@ -92,7 +92,7 @@ const Clients = () => {
     { src: agsLogo }, { src: ajubaLogo }, { src: axlesLogo }, { src: icuLogo }, { src: infinityLogo }, 
     { src: isuzuLogo }, { src: itcLogo }, { src: omegaLogo }, { src: birlaSoftLogo }, { src: cholaMsLogo }, 
     { src: itpcLogo }, { src: starHealthLogo }, { src: recodeLogo }, { src: tmtlLogo }, { src: transunionLogo }, 
-    { src: dinexLogo }, { src: gigamonLogo }, { src: kennametalLogo }, { src: kumaranLogo }, { src: agpLogo }, 
+    { src: dinexLogo }, { src: gigamonLogo }, { src: kennametalLogo }, { src: kumaranLogo }, 
     { src: usConsulateLogo }
   ];
 

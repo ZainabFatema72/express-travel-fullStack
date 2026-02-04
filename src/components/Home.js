@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../supabaseClient';
 import { Link } from 'react-router-dom';
 import Hero from './Hero';
 import whyChooseUsImg from '../assets/whychooseus.jpeg';
@@ -10,14 +11,28 @@ import {
 } from 'lucide-react';
 
 const Home = () => {
-  const [activeFeedback, setActiveFeedback] = useState(1); 
+  const [activeFeedback, setActiveFeedback] = useState(0); 
+  const [testimonials, setTestimonials] = useState([]); 
+  const [loading, setLoading] = useState(true);
 
-  const testimonials = [
-    { id: 0, name: "Jestin Mathew", role: "Director", initials: "JM", text: "We would like to appreciate your good office for arranging travel trip to Maldives for our Director. The experience was coordinated perfectly." },
-    { id: 1, name: "Mr. D.Venkateswaran", role: "Corporate Lead", initials: "DV", text: "The professional approach of Express Travel is commendable. Their fleet quality and punctuality were exactly what we were looking for." },
-    { id: 2, name: "Ramesh Babu", role: "Executive VP", initials: "RB", text: "Chauffeur Mr. Parameswaran reported to duty on time and picked up all the dignitaries with utmost care and safety." },
-    { id: 3, name: "Santosh Krinsky", role: "International Traveler", initials: "SK", text: "Thank you for your efforts to make our 2 week tour successful. Highly pleased with the service and drivers." }
-  ];
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('testimonials')
+          .select('*')
+          .order('order_index', { ascending: true });
+
+        if (error) throw error;
+        if (data) setTestimonials(data);
+      } catch (error) {
+        console.error('Error fetching testimonials:', error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTestimonials();
+  }, []);
 
   const services = [
     { title: 'Luxury Car Rental', image: 'https://cdn.i-scmp.com/sites/default/files/d8/images/methode/2020/02/12/f7c86e68-4c08-11ea-9b4e-9c10402c07b7_972x_125528.jpg' },
@@ -31,7 +46,7 @@ const Home = () => {
     <main className="bg-white antialiased relative">
       <Hero />
 
-      {/* 1. Discovery Section - Compact py-8 */}
+      {/* 1. Discovery Section */}
       <section className="py-8 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-[#1C4D8D] font-bold tracking-[0.2em] uppercase text-[10px] mb-2 italic">Since 1999</p>
@@ -44,7 +59,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 2. Home About Section - Compact py-8 */}
+      {/* 2. Home About Section */}
       <section className="py-8 px-6 bg-slate-50 overflow-hidden text-left">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-8">
           <div className="lg:w-1/2 relative group">
@@ -64,7 +79,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 3. Services Grid - Compact py-8 & Linked to /services */}
+      {/* 3. Services Grid */}
       <section className="py-8 bg-white px-6">
         <div className="max-w-7xl mx-auto text-center mb-6">
             <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tighter">Our Premium Services</h2>
@@ -76,9 +91,7 @@ const Home = () => {
                     <img src={service.image} alt={service.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#1C4D8D]/40 via-[#1C4D8D]/20 to-transparent" />
                     <div className="absolute inset-0 p-4 flex flex-col justify-end text-white text-left">
-
                         <h2 className="text-[11px] font-black uppercase tracking-tight mb-2 leading-tight">{service.title}</h2>
-
                         <div className="flex items-center gap-1 text-[9px] font-bold uppercase opacity-0 group-hover:opacity-100 transition-opacity">
                           View Details <ArrowRight size={12} className="text-blue-300" />
                         </div>
@@ -88,7 +101,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 4. WHY CHOOSE US - Compact py-8 */}
+      {/* 4. WHY CHOOSE US */}
       <section className="relative h-auto py-8 lg:h-[450px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center z-0" style={{ backgroundImage: `url(${whyChooseUsImg})` }}>
           <div className="absolute inset-0 bg-black/65"></div> 
@@ -120,31 +133,60 @@ const Home = () => {
         </div>
       </section>
 
-     
+      {/* 5. CLIENT FEEDBACK SECTION */}
+      {testimonials.length > 0 && (
+        <section className="py-8 px-6 overflow-hidden relative bg-white">
+          <div className="absolute inset-0 bg-cover bg-center z-0 opacity-5" style={{ backgroundImage: `url(${clientBgImg})` }}></div>
+          <div className="max-w-3xl mx-auto text-center relative z-10">
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 uppercase mb-8 tracking-tighter">
+              What Our <span className="text-[#1C4D8D] italic">Clients Say</span>
+            </h2>
+            
+            <div className="relative flex items-center justify-center mb-8 gap-6">
+              <button 
+                onClick={() => setActiveFeedback(activeFeedback === 0 ? testimonials.length - 1 : activeFeedback - 1)} 
+                className="p-1 text-[#1C4D8D] border border-[#1C4D8D]/20 rounded-full hover:bg-[#1C4D8D] hover:text-white transition-all">
+                <ChevronLeft size={18}/>
+              </button>
 
+              <div className="flex items-center gap-3">
+                {testimonials.map((item, index) => (
+                  <div 
+                    key={item.id} 
+                    onClick={() => setActiveFeedback(index)} 
+                    className={`cursor-pointer rounded-full flex items-center justify-center font-black shadow-md transition-all duration-300 ${index === activeFeedback ? 'w-14 h-14 border-[3px] border-[#1C4D8D] scale-105' : 'w-10 h-10 opacity-30 grayscale' } bg-[#1C4D8D] text-white text-sm`}
+                  >
+                    {item.initials}
+                  </div>
+                ))}
+              </div>
 
-     {/* 5. CLIENT FEEDBACK - Compact py-8 */}
-      <section className="py-8 px-6 overflow-hidden relative bg-white">
-        <div className="absolute inset-0 bg-cover bg-center z-0 opacity-5" style={{ backgroundImage: `url(${clientBgImg})` }}></div>
-        <div className="max-w-3xl mx-auto text-center relative z-10">
-          <h2 className="text-3xl md:text-4xl font-black text-slate-900 uppercase mb-8 tracking-tighter">What Our <span className="text-[#1C4D8D] italic">Clients Say</span></h2>
-          <div className="relative flex items-center justify-center mb-8 gap-6">
-            <button onClick={() => setActiveFeedback(activeFeedback === 0 ? 3 : activeFeedback - 1)} className="p-1 text-[#1C4D8D] border border-[#1C4D8D]/20 rounded-full hover:bg-[#1C4D8D] hover:text-white transition-all"><ChevronLeft size={18}/></button>
-            <div className="flex items-center gap-3">
-              {testimonials.map((item, index) => (
-                <div key={item.id} onClick={() => setActiveFeedback(index)} className={`cursor-pointer rounded-full flex items-center justify-center font-black shadow-md transition-all duration-300 ${index === activeFeedback ? 'w-14 h-14 border-[3px] border-[#1C4D8D] scale-105' : 'w-10 h-10 opacity-30 grayscale' } bg-[#1C4D8D] text-white text-sm`}>{item.initials}</div>
-              ))}
+              <button 
+                onClick={() => setActiveFeedback(activeFeedback === testimonials.length - 1 ? 0 : activeFeedback + 1)} 
+                className="p-1 text-[#1C4D8D] border border-[#1C4D8D]/20 rounded-full hover:bg-[#1C4D8D] hover:text-white transition-all">
+                <ChevronRight size={18}/>
+              </button>
             </div>
-            <button onClick={() => setActiveFeedback(activeFeedback === 3 ? 0 : activeFeedback + 1)} className="p-1 text-[#1C4D8D] border border-[#1C4D8D]/20 rounded-full hover:bg-[#1C4D8D] hover:text-white transition-all"><ChevronRight size={18}/></button>
+
+            <div className="bg-slate-50 p-6 md:p-8 rounded-xl shadow-lg text-center border border-slate-100 relative min-h-[200px] flex flex-col justify-center">
+              <Quote className="text-[#1C4D8D] mx-auto mb-4 opacity-40" size={32} />
+              <p className="text-slate-600 text-sm md:text-base leading-relaxed italic font-medium mb-4">
+                "{testimonials[activeFeedback]?.text}"
+              </p>
+              <div className="w-8 h-0.5 bg-blue-500 mx-auto mb-3"></div>
+              <p className="font-black text-[#1C4D8D] uppercase tracking-tighter text-base">
+                {testimonials[activeFeedback]?.name}
+              </p>
+            </div>
           </div>
-          <div className="bg-slate-50 p-6 md:p-8 rounded- xl shadow-lg text-center border border-slate-100 relative">
-            <Quote className="text-[#1C4D8D] mx-auto mb-4 opacity-40" size={32} />
-            <p className="text-slate-600 text-sm md:text-base leading-relaxed italic font-medium mb-4">"{testimonials[activeFeedback].text}"</p>
-            <div className="w-8 h-0.5 bg-blue-500 mx-auto mb-3"></div>
-            <p className="font-black text-[#1C4D8D] uppercase tracking-tighter text-base">{testimonials[activeFeedback].name}</p>
-          </div>
+        </section>
+      )}
+
+      {loading && (
+        <div className="py-10 text-center text-[#1C4D8D] font-bold">
+          Loading Experiences...
         </div>
-      </section>
+      )}
     </main>
   );
 };

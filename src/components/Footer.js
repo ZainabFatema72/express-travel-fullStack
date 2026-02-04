@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Facebook, Instagram, Linkedin, MapPin, ChevronRight, 
-  Youtube, FileText, Download, Phone, Mail, MessageSquare 
+  Facebook, Instagram,  MapPin, ChevronRight,FileText, Download, Phone, Mail, MessageSquare 
 } from 'lucide-react';
 import rwtlogo from '../assets/rwtlogo.png'; 
 
@@ -131,12 +130,6 @@ const Footer = () => {
               </a>
               <a href="https://www.instagram.com/p/DP1NcqLAQVE/" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
                 <Instagram size={16} />
-              </a>
-              <a href="https://www.instagram.com/p/DP1O685CYku/" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
-                <Linkedin size={16} />
-              </a>
-              <a href="#!" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
-                <Youtube size={16} />
               </a>
             </div>
             <div className="flex items-center gap-2 text-[#60A5FA] text-xs font-black uppercase italic">

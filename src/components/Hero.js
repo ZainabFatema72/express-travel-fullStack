@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useCallback} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
-  ChevronLeft, ChevronRight, X, ShieldCheck, 
-  User, Phone, Calendar, CheckCircle2 
+  ChevronLeft, ChevronRight, X, CheckCircle2 ,ChevronDown
 } from 'lucide-react';
 
 // --- APNI IMAGES YAHAN IMPORT KAREIN ---
@@ -18,6 +17,8 @@ const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [bookingStep, setBookingStep] = useState('form');
+
+   const categories = ["Luxury Cars", "Premium Cars", "Economy Cars", "EVs", "Luxury Van", "Mini Coach", "Large Bus"];
 
   const slides = [
     {
@@ -52,13 +53,18 @@ const Hero = () => {
     }
   ];
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-  const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+ const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+  }, [slides.length]);
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  };
 
   useEffect(() => {
     const timer = setInterval(nextSlide, 7000);
     return () => clearInterval(timer);
-  }, []);
+  }, [nextSlide]);
 
   return (
     <section className="relative h-[60vh] md:h-[100vh] w-full overflow-hidden group bg-black font-sans">
@@ -118,40 +124,72 @@ const Hero = () => {
         <ChevronRight size={20} className="md:w-6 md:h-6" />
       </button>
 
-      {/* COMPACT MODAL FORM */}
+       {/* COMPACT MODAL FORM */}
       {showBookingModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm" onClick={() => setShowBookingModal(false)}></div>
-          <div className="relative bg-white w-full max-w-[340px] rounded-none shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
-            <button onClick={() => setShowBookingModal(false)} className="absolute top-0 right-0 p-3 text-gray-400 hover:bg-red-600 hover:text-white transition-all z-50">
-              <X size={18} />
-            </button>
-            <div className="p-6 text-black">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-hidden">
+          <div className="absolute inset-0 bg-[#0a1128]/90 backdrop-blur-md" onClick={() => setShowBookingModal(false)}></div>
+          <div className="relative bg-white w-full max-w-[360px] max-h-[90vh] flex flex-col rounded-none shadow-2xl overflow-hidden border border-white/10">
+            
+            <div className="bg-[#0a1128] py-3 px-6 flex justify-between items-center border-b border-blue-500/30 shrink-0">
+              <h3 className="text-white text-[10px] font-black uppercase tracking-[0.2em]">Request Quote</h3>
+              <button onClick={() => setShowBookingModal(false)} className="text-white/60 hover:text-white transition-all">
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="p-6 md:p-8 overflow-y-auto">
               {bookingStep === 'form' ? (
-                <form onSubmit={(e) => { e.preventDefault(); setBookingStep('success'); }} className="space-y-2">
-                   <h3 className="text-sm font-black uppercase tracking-tight border-l-3 border-blue-600 pl-2 mb-4">Request Quote</h3>
-                   <input required type="text" placeholder="NAME" className="w-full p-2.5 bg-gray-50 border border-gray-200 outline-none focus:border-blue-600 text-[9px] font-bold uppercase rounded-none" />
-                   <input required type="tel" placeholder="NUMBER" className="w-full p-2.5 bg-gray-50 border border-gray-200 outline-none focus:border-blue-600 text-[9px] font-bold uppercase rounded-none" />
-                   <input required type="email" placeholder="EMAIL" className="w-full p-2.5 bg-gray-50 border border-gray-200 outline-none focus:border-blue-600 text-[9px] font-bold uppercase rounded-none" />
-                   <div className="grid grid-cols-2 gap-2">
-                        <div className="flex flex-col">
-                          <label className="text-[7px] font-black text-gray-400 mb-1 uppercase">Start Date</label>
-                          <input required type="date" className="w-full p-2 bg-gray-50 border border-gray-200 outline-none focus:border-blue-600 text-[9px] font-bold rounded-none" />
+                <form onSubmit={(e) => { e.preventDefault(); setBookingStep('success'); }} className="space-y-3">
+                   <div className="space-y-0.5">
+                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Full Name</label>
+                     <input required type="text" placeholder="YOUR NAME" className="w-full p-2.5 bg-gray-50 border border-slate-200 outline-none focus:border-blue-600 text-[10px] font-bold uppercase rounded-none" />
+                   </div>
+
+                   <div className="space-y-0.5">
+                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Contact Number</label>
+                     <input required type="tel" placeholder="+91" className="w-full p-2.5 bg-gray-50 border border-slate-200 outline-none focus:border-blue-600 text-[10px] font-bold rounded-none" />
+                   </div>
+
+                   <div className="space-y-0.5">
+                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Email Address</label>
+                     <input required type="email" placeholder="EMAIL@COMPANY.COM" className="w-full p-2.5 bg-gray-50 border border-slate-200 outline-none focus:border-blue-600 text-[10px] font-bold uppercase rounded-none" />
+                   </div>
+                   
+                   {/* Dropdown with Arrow Icon */}
+                   <div className="space-y-0.5 text-left relative">
+                     <label className="text-[8px] font-black text-slate-400 uppercase tracking-widest block">Vehicle Category</label>
+                     <div className="relative">
+                       <select required className="w-full p-2.5 bg-gray-50 border border-slate-200 outline-none focus:border-blue-600 text-[10px] font-black uppercase rounded-none cursor-pointer appearance-none pr-10">
+                          <option value="" disabled selected>Select Category</option>
+                          {categories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
+                       </select>
+                       <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                     </div>
+                   </div>
+
+                   <div className="grid grid-cols-2 gap-3">
+                        <div className="space-y-0.5">
+                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Start Date</label>
+                          <input required type="date" className="w-full p-2 bg-gray-50 border border-slate-200 outline-none focus:border-blue-600 text-[9px] font-bold rounded-none" />
                         </div>
-                        <div className="flex flex-col">
-                          <label className="text-[7px] font-black text-gray-400 mb-1 uppercase">End Date</label>
-                          <input required type="date" className="w-full p-2 bg-gray-50 border border-gray-200 outline-none focus:border-blue-600 text-[9px] font-bold rounded-none" />
+                        <div className="space-y-0.5">
+                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">End Date</label>
+                          <input required type="date" className="w-full p-2 bg-gray-50 border border-slate-200 outline-none focus:border-blue-600 text-[9px] font-bold rounded-none" />
                         </div>
                    </div>
-                   <button type="submit" className="w-full bg-[#1C4D8D] text-white py-3 mt-2 font-black text-[10px] uppercase tracking-widest hover:bg-slate-900 transition-all rounded-none shadow-lg">
-                     Submit Request
+                   
+                   <button type="submit" className="w-full bg-blue-600 hover:bg-[#0a1128] text-white py-3.5 mt-2 font-black text-[10px] uppercase tracking-[0.2em] transition-all rounded-none shadow-lg active:scale-95">
+                      Confirm Request
                    </button>
                 </form>
               ) : (
-                <div className="text-center py-4">
-                  <CheckCircle2 size={40} className="mx-auto mb-3 text-green-500" />
-                  <p className="font-black uppercase text-[11px] tracking-tighter">Request Sent Successfully</p>
-                  <button onClick={() => { setShowBookingModal(false); setBookingStep('form'); }} className="mt-4 w-full border border-black py-2 font-black text-[9px] uppercase rounded-none">Close</button>
+                <div className="text-center py-6">
+                  <div className="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle2 size={32} className="text-green-500" />
+                  </div>
+                  <h4 className="font-black uppercase text-xs tracking-tight mb-1 leading-none">Request Received</h4>
+                  <p className="text-[9px] text-slate-500 font-bold uppercase mb-6">Our concierge will contact you shortly.</p>
+                  <button onClick={() => { setShowBookingModal(false); setBookingStep('form'); }} className="w-full border-2 border-[#0a1128] py-3 font-black text-[9px] uppercase rounded-none hover:bg-[#0a1128] hover:text-white transition-all">Close</button>
                 </div>
               )}
             </div>

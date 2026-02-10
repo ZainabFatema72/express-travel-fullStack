@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import { 
   Facebook, Instagram,  MapPin, ChevronRight,FileText, Download, Phone, Mail, MessageSquare 
 } from 'lucide-react';
@@ -104,7 +105,7 @@ const Footer = () => {
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-2">
                     <Phone size={16} className="text-[#60A5FA]" />
-                    <p className="text-white text-sm font-black tracking-tight">+91 44 2822 4413 <br></br>+91 44 2827 2279 <br></br>+91 97 9111 1275</p>
+                    <p className="text-white text-sm font-black tracking-tight">+91 44 2822 4413 <br></br>+91 97 8662 8662 <br></br>+91 97 9111 1275</p>
                   </div>
                 </div>
                 
@@ -121,6 +122,7 @@ const Footer = () => {
             <h4 className="text-[#60A5FA] font-black text-lg md:text-xl uppercase tracking-widest border-l-4 border-[#60A5FA] pl-3 drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]">
               Connect
             </h4>
+            
             <div className="flex flex-row items-center gap-2">
               <a href="https://www.facebook.com/share/r/1HyKdVtRCN/" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 border border-white/10 rounded-none text-white hover:bg-[#60A5FA] transition-all">
                 <Facebook size={16} />
@@ -136,13 +138,13 @@ const Footer = () => {
                 <div className="w-2 h-2 bg-[#60A5FA] rounded-full animate-ping" />
                 Since 1999
             </div>
+            
           </div>
         </div>
 
         {/* --- BOTTOM BAR --- */}
         <div className="pt-5 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-white/40 font-black text-[10px] uppercase tracking-[0.2em]">
           <p>© 2026 Express Travel Corporate Services. All Rights Reserved.</p>
-          
           <div className="flex items-center gap-3">
             <span className="text-[8px] text-gray-500 uppercase tracking-widest">Powered By</span>
             <img 

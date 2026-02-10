@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './components/Home';
@@ -11,11 +11,11 @@ import Clients from './components/Clients';
 import Branches from './components/Branches';
 import ContactUs from './components/ContactUs';
 import InquiryForm from './components/InquiryForm';
-
-// FloatingControls import (Home folder se)
+import AdminLogin from './components/AdminLogin';
+import AdminDashboard from './components/AdminDashboard';
 import FloatingControls from './components/home/FloatingControls';
 
-// Page change hone par scroll top par le jane ke liye
+// 1. Scroll to top on page change
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -24,21 +24,48 @@ const ScrollToTop = () => {
   return null;
 };
 
-function App() {
-  // Aapka common contact data
+// 2. Layout Wrapper: Jo Header/Footer ko Admin pages par hide karega
+const LayoutWrapper = ({ children }) => {
+  const location = useLocation();
+  
+  // Agar path '/admin' se start hota hai toh true hoga
+  const isAdminPage = location.pathname.startsWith('/admin');
+
   const contactInfo = {
-    phoneNumber: "8805547785",
-    whatsappNumber: "8805547785"
+    phoneNumber: "9791111275",
+    whatsappNumber: "9791111275"
   };
 
   return (
+    <>
+      {/* Agar Admin page NAHI hai, tabhi Header dikhao */}
+      {!isAdminPage && <Header />}
+      
+      <div className={isAdminPage ? "min-h-screen" : "min-h-screen pt-0"}>
+        {children}
+      </div>
+
+      {/* Agar Admin page NAHI hai, tabhi Floating Controls aur Footer dikhao */}
+      {!isAdminPage && (
+        <>
+          <FloatingControls 
+            phoneNumber={contactInfo.phoneNumber} 
+            whatsappNumber={contactInfo.whatsappNumber} 
+          />
+          <Footer />
+        </>
+      )}
+    </>
+  );
+};
+
+function App() {
+  return (
     <Router>
       <ScrollToTop />
-      <Header />
-      
-      {/* Main Content Area */}
-      <div className="min-h-screen pt-0"> 
+      <LayoutWrapper>
         <Routes>
+          {/* Public Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
@@ -48,16 +75,15 @@ function App() {
           <Route path="/branches" element={<Branches />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/inquiry" element={<InquiryForm />} /> 
-        </Routes>
-      </div>
 
-      {/* --- Floating Controls (Inquiry, Call, WhatsApp) --- */}
-      <FloatingControls 
-        phoneNumber={contactInfo.phoneNumber} 
-        whatsappNumber={contactInfo.whatsappNumber} 
-      />
-      
-      <Footer />
+          {/* Admin Routes (No Header/Footer here) */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+
+          {/* 404 Redirect */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </LayoutWrapper>
     </Router>
   );
 }

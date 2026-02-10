@@ -39,6 +39,23 @@ const AdminDashboard = () => {
     await supabase.auth.signOut();
     navigate('/admin/login');
   };
+  const handleDelete = async (id) => {
+  if (!window.confirm("Are you sure you want to remove this item?")) return;
+
+  try {
+    const { error } = await supabase
+      .from(activeTab)
+      .delete()
+      .eq('id', id);
+
+    if (error) throw error;
+
+    alert("Item removed successfully!");
+    fetchData(); // List ko refresh karne ke liye
+  } catch (err) {
+    alert("Error deleting: " + err.message);
+  }
+};
 
   const handleUpload = async (e) => {
     e.preventDefault();
@@ -167,55 +184,61 @@ const AdminDashboard = () => {
         <main className="flex-1 overflow-y-auto p-8 bg-gray-50">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-[1600px] mx-auto">
             
-            {/* Form Section */}
-            <div className="lg:col-span-1">
-              <div className="bg-white p-3 rounded-none shadow-sm border border-gray-200 sticky top-2">
-                <div className="flex items-center gap-1 mb-1 text-blue-600">
-                  <PlusCircle size={20} />
-                  <h3 className="font-black uppercase text-xs tracking-widest">Add New {activeTab.slice(0, -1)}</h3>
-                </div>
-                
-                <form onSubmit={handleUpload} className="space-y-4">
-                  <div className="space-y-1">
-                    <label className="text-[10px] font-bold uppercase text-gray-400 ml-1">Title / Name</label>
-                    <input type="text" className="w-full bg-gray-50 border-gray-200 border p-3 rounded-none text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all" placeholder="Enter name..." required
-                      value={form.name} onChange={e => setForm({...form, name: e.target.value})} />
-                  </div>
+           {/* Form Section */}
+<div className="lg:col-span-1">
+  {/* p-3 ko p-2 kiya aur gap kam kiya */}
+  <div className="bg-white p-2 rounded-none shadow-sm border border-gray-200 sticky top-2">
+    <div className="flex items-center gap-1 mb-1 text-blue-600">
+      <PlusCircle size={16} /> {/* Icon thoda chota kiya */}
+      <h3 className="font-black uppercase text-[10px] tracking-widest">Add New {activeTab.slice(0, -1)}</h3>
+    </div>
+    
+    {/* space-y-4 ko space-y-2 kiya taaki elements chipak jayein */}
+    <form onSubmit={handleUpload} className="space-y-2">
+      <div className="space-y-0.5">
+        <label className="text-[9px] font-bold uppercase text-gray-400 ml-1">Title / Name</label>
+        {/* p-3 ko p-2 kiya */}
+        <input type="text" className="w-full bg-gray-50 border-gray-200 border p-2 rounded-none text-xs focus:ring-1 focus:ring-blue-500 outline-none transition-all" placeholder="Enter name..." required
+          value={form.name} onChange={e => setForm({...form, name: e.target.value})} />
+      </div>
 
-                  {activeTab === 'cars' && (
-                    <>
-                      <input type="text" placeholder="Category (e.g. Luxury Sedan)" className="w-full bg-gray-50 border-gray-200 border p-3 rounded-none text-sm"
-                        value={form.category} onChange={e => setForm({...form, category: e.target.value})} />
-                      <input type="number" placeholder="Number of Seats" className="w-full bg-gray-50 border-gray-200 border p-3 rounded-none text-sm"
-                        value={form.seats} onChange={e => setForm({...form, seats: e.target.value})} />
-                      <textarea placeholder="Car Description..." className="w-full bg-gray-50 border-gray-200 border p-3 rounded-none text-sm h-24 resize-none"
-                        value={form.description} onChange={e => setForm({...form, description: e.target.value})} />
-                    </>
-                  )}
+      {activeTab === 'cars' && (
+        <>
+          <input type="text" placeholder="Category" className="w-full bg-gray-50 border-gray-200 border p-2 rounded-none text-xs"
+            value={form.category} onChange={e => setForm({...form, category: e.target.value})} />
+          <input type="number" placeholder="Seats" className="w-full bg-gray-50 border-gray-200 border p-2 rounded-none text-xs"
+            value={form.seats} onChange={e => setForm({...form, seats: e.target.value})} />
+          {/* h-24 ko h-16 kiya */}
+          <textarea placeholder="Description..." className="w-full bg-gray-50 border-gray-200 border p-2 rounded-none text-xs h-16 resize-none"
+            value={form.description} onChange={e => setForm({...form, description: e.target.value})} />
+        </>
+      )}
 
-                  {activeTab === 'testimonials' && (
-                    <>
-                      <input type="text" placeholder="User Initials (e.g. JD)" className="w-full bg-gray-50 border-gray-200 border p-3 rounded-none text-sm"
-                        value={form.initials} onChange={e => setForm({...form, initials: e.target.value})} />
-                      <textarea placeholder="Client Feedback..." className="w-full bg-gray-50 border-gray-200 border p-3 rounded-none text-sm h-24 resize-none"
-                        value={form.text} onChange={e => setForm({...form, text: e.target.value})} />
-                    </>
-                  )}
+      {activeTab === 'testimonials' && (
+        <>
+          <input type="text" placeholder="User Initials" className="w-full bg-gray-50 border-gray-200 border p-2 rounded-none text-xs"
+            value={form.initials} onChange={e => setForm({...form, initials: e.target.value})} />
+          <textarea placeholder="Feedback..." className="w-full bg-gray-50 border-gray-200 border p-2 rounded-none text-xs h-16 resize-none"
+            value={form.text} onChange={e => setForm({...form, text: e.target.value})} />
+        </>
+      )}
 
-                  {activeTab !== 'testimonials' && (
-                    <div className="p-4 border-2 border-dashed border-gray-200 rounded-none bg-gray-50 group hover:border-blue-400 transition-colors">
-                      <label className="block text-[10px] font-bold uppercase text-gray-500 mb-2">Media Upload</label>
-                      <input type="file" className="text-xs w-full file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-blue-600 file:text-white hover:file:bg-blue-700" 
-                        onChange={e => setForm({...form, image: e.target.files[0]})} />
-                    </div>
-                  )}
+      {activeTab !== 'testimonials' && (
+        /* padding p-4 ko p-2 kiya */
+        <div className="p-2 border-2 border-dashed border-gray-200 rounded-none bg-gray-50 group hover:border-blue-400 transition-colors">
+          <label className="block text-[9px] font-bold uppercase text-gray-500 mb-1">Media</label>
+          <input type="file" className="text-[10px] w-full file:mr-2 file:py-1 file:px-3 file:rounded-none file:border-0 file:text-[10px] file:font-bold file:bg-blue-600 file:text-white" 
+            onChange={e => setForm({...form, image: e.target.files[0]})} />
+        </div>
+      )}
 
-                  <button type="submit" disabled={loading} className="w-full bg-blue-600 text-white font-black py-4 rounded-none hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 uppercase text-xs tracking-[2px] mt-2">
-                    {loading ? "Uploading Data..." : "Deploy to Site"}
-                  </button>
-                </form>
-              </div>
-            </div>
+      {/* py-4 ko py-2.5 kiya aur margin top kam kiya */}
+      <button type="submit" disabled={loading} className="w-full bg-blue-600 text-white font-black py-2.5 rounded-none hover:bg-blue-700 transition-all shadow-md shadow-blue-100 uppercase text-[10px] tracking-[1px] mt-1">
+        {loading ? "Uploading..." : "Deploy"}
+      </button>
+    </form>
+  </div>
+</div>
 
             {/* Table Section */}
             <div className="lg:col-span-2">
@@ -246,10 +269,14 @@ const AdminDashboard = () => {
                           </div>
                         </td>
                         <td className="p-5 text-right">
-                          <button onClick={() => console.log("Delete Logic Here")} className="p-2.5 text-red-400 hover:bg-red-50 hover:text-red-600 rounded-none transition-all inline-flex items-center gap-2">
-                            <Trash2 size={16} /> <span className="text-[10px] font-black uppercase">Remove</span>
-                          </button>
-                        </td>
+  <button 
+    onClick={() => handleDelete(item.id)} // Yahan change kiya
+    className="p-2.5 text-red-400 hover:bg-red-50 hover:text-red-600 rounded-none transition-all inline-flex items-center gap-2"
+  >
+    <Trash2 size={16} /> 
+    <span className="text-[10px] font-black uppercase">Remove</span>
+  </button>
+</td>
                       </tr>
                     ))}
                     {dataList.length === 0 && (
@@ -269,3 +296,14 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
+
+
+
+
+
+
+
+
+
+
